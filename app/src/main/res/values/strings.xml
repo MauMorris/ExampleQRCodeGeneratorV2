@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Generador de QRs</string>
+
+    <string name="generador_qr">Generador de QR</string>
+
+    <string name="cantidad">cantidad</string>
+    <string name="concepto">concepto</string>
+    <string name="nombre">nombre</string>
+
+    <string name="con_sin_logo">Con logo de BBVA?</string>
+
+    <string name="boton_generar">GENERAR QR</string>
+    <string name="switch_no">NO</string>
+    <string name="switch_si">SI</string>
+</resources>
