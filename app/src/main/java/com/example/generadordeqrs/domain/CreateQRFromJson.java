@@ -1,4 +1,4 @@
-package com.example.generadordeqrs;
+package com.example.generadordeqrs.domain;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.Log;
 
+import com.example.generadordeqrs.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -26,8 +27,8 @@ public class CreateQRFromJson {
     public CreateQRFromJson() {
     }
 
-    public String crearJson(String et_cantidad, String et_concepto, String et_nombre,
-                            Boolean isTdc, String strTdc, String strCuentaClabe) {
+    public String createJson(String et_cantidad, String et_concepto, String et_nombre,
+                             Boolean isTdc, String strTdc, String strCuentaClabe) {
 
         String nombre = et_nombre.toUpperCase(); //quitar en caso de ingresar datos automaticamente
         // y cambiar por strNombre
@@ -50,8 +51,8 @@ public class CreateQRFromJson {
     }
 
 
-    public Bitmap createQR(String qrCodeData, String charset, int sideLength, String item,
-                           Context context, Boolean isLogo) {
+    public Bitmap createQRBitmap(String qrCodeData, String charset, int sideLength, String item,
+                                 Context context, Boolean isLogo) {
 
         BitMatrix result;
         Bitmap bitmap;

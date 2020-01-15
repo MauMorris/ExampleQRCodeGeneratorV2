@@ -1,4 +1,4 @@
-package com.example.generadordeqrs;
+package com.example.generadordeqrs.datasource;
 
 public class SimulationData {
     public final static String[] incertidumbre = {"H (30%)", "Q (25%)", "M (15%)", "L (7%)"};
