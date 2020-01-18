@@ -7,8 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.generadordeqrs.domain.CreateQRFromJson;
-import com.example.generadordeqrs.datasource.SimulationData;
+import com.example.generadordeqrs.domain.UseCaseCreateQRFromJson;
 
 public class QrMainActivityViewModel extends ViewModel {
     private static final String LOG_TAG = QrMainActivityViewModel.class.getSimpleName();
@@ -21,8 +20,12 @@ public class QrMainActivityViewModel extends ViewModel {
 
     private MutableLiveData<Bitmap> currentQrImage;
 
+    private UseCaseCreateQRFromJson qrGenerator;
+
     public QrMainActivityViewModel() {
         currentQrImage = new MutableLiveData<>();
+
+        qrGenerator = UseCaseCreateQRFromJson.getInstance();
     }
 
     public MutableLiveData<Bitmap> getCurrentQrData() {
@@ -34,11 +37,11 @@ public class QrMainActivityViewModel extends ViewModel {
     }
 
     public String[] listDataErrorCorrection() {
-        return SimulationData.incertidumbre;
+        return qrGenerator.getListOfErrorCorrection();
     }
 
     public String[] listDataClabeTdc() {
-        return SimulationData.clabeTdc;
+        return qrGenerator.getListOfClabeAndTdc();
     }
 
     public void setItemErrorCorrection(String itemErrorCorrection) {
@@ -50,36 +53,39 @@ public class QrMainActivityViewModel extends ViewModel {
     }
 
     public void setValuesWithLocalData(String localData) {
+        String[] dataClabeQr = qrGenerator.getListOfClabes();
+        String[] dataTdcQr = qrGenerator.getListOfTdc();
+
         switch (localData) {
             case "1500003862":
-                setValues("", false, SimulationData.dataClabeQr[0]);
+                setValues("", false, dataClabeQr[0]);
                 break;
             case "1205791510":
-                setValues("", false, SimulationData.dataClabeQr[1]);
+                setValues("", false, dataClabeQr[1]);
                 break;
             case "1500000077":
-                setValues("", false, SimulationData.dataClabeQr[2]);
+                setValues("", false, dataClabeQr[2]);
                 break;
             case "0102196018":
-                setValues("", false, SimulationData.dataClabeQr[3]);
+                setValues("", false, dataClabeQr[3]);
                 break;
             case "4152313304428563":
-                setValues(SimulationData.dataTdcQr[0], true, "");
+                setValues(dataTdcQr[0], true, "");
                 break;
             case "4555041870000184":
-                setValues(SimulationData.dataTdcQr[1], true, "");
+                setValues(dataTdcQr[1], true, "");
                 break;
             case "4555041000002290":
-                setValues(SimulationData.dataTdcQr[2], true, "");
+                setValues(dataTdcQr[2], true, "");
                 break;
             case "4555042602360516":
-                setValues(SimulationData.dataTdcQr[3], true, "");
+                setValues(dataTdcQr[3], true, "");
                 break;
             case "4555042700367868":
-                setValues(SimulationData.dataTdcQr[4], true, "");
+                setValues(dataTdcQr[4], true, "");
                 break;
             case "4152313304428837":
-                setValues(SimulationData.dataTdcQr[5], true, "");
+                setValues(dataTdcQr[5], true, "");
                 break;
         }
     }
@@ -96,8 +102,6 @@ public class QrMainActivityViewModel extends ViewModel {
     }
 
     public void createQr(Context context, String cantidad, String concepto, String nombre, int width) {
-        CreateQRFromJson qrGenerator = new CreateQRFromJson();
-
         String jsonQrContent = qrGenerator.createJson(
                 cantidad,
                 concepto,

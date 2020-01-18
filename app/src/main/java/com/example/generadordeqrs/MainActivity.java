@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
         setViews(mMainBinding);
         setListeners();
-        observeUI(mQrViewModel);
+        subscribeUI(mQrViewModel);
     }
 
-    private void observeUI(QrMainActivityViewModel mQrViewModel) {
+    private void subscribeUI(QrMainActivityViewModel mQrViewModel) {
         mQrViewModel.getCurrentQrData().observe(this, new Observer<Bitmap>() {
             @Override
             public void onChanged(Bitmap bitmap) {

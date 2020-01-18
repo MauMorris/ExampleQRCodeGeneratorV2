@@ -20,11 +20,23 @@ import java.util.Map;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
-public class CreateQRFromJson {
+import com.example.generadordeqrs.repository.RepositorySimulationData;
 
-    private static final String LOG_TAG = CreateQRFromJson.class.getSimpleName();
+public class UseCaseCreateQRFromJson {
 
-    public CreateQRFromJson() {
+    private static UseCaseCreateQRFromJson sInstance;
+    private static final String LOG_TAG = UseCaseCreateQRFromJson.class.getSimpleName();
+    private RepositorySimulationData mRepo;
+
+    private UseCaseCreateQRFromJson() {
+        mRepo = RepositorySimulationData.getInstance();
+    }
+
+    public static UseCaseCreateQRFromJson getInstance() {
+        if (sInstance == null) {
+            sInstance = new UseCaseCreateQRFromJson();
+        }
+        return sInstance;
     }
 
     public String createJson(String et_cantidad, String et_concepto, String et_nombre,
@@ -158,5 +170,21 @@ public class CreateQRFromJson {
         canvas.drawBitmap(overlay, centreX, centreY, null);
 
         return combined;
+    }
+
+    public String[] getListOfErrorCorrection() {
+        return mRepo.getListIncertidumbre();
+    }
+
+    public String[] getListOfClabeAndTdc() {
+        return mRepo.getListClabeTdc();
+    }
+
+    public String[] getListOfClabes() {
+        return mRepo.getListOfClabes();
+    }
+
+    public String[] getListOfTdc() {
+        return mRepo.getListOfTdc();
     }
 }
