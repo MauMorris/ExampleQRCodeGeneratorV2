@@ -26,10 +26,10 @@ public class UseCaseCreateQRFromJson {
 
     private static UseCaseCreateQRFromJson sInstance;
     private static final String LOG_TAG = UseCaseCreateQRFromJson.class.getSimpleName();
-    private RepositorySimulationData mRepo;
+    private RepositoryCallback mRepoCallback;
 
     private UseCaseCreateQRFromJson() {
-        mRepo = RepositorySimulationData.getInstance();
+        mRepoCallback = RepositorySimulationData.getInstance();
     }
 
     public static UseCaseCreateQRFromJson getInstance() {
@@ -173,18 +173,18 @@ public class UseCaseCreateQRFromJson {
     }
 
     public String[] getListOfErrorCorrection() {
-        return mRepo.getListIncertidumbre();
+        return mRepoCallback.getListIncertidumbre();
     }
 
     public String[] getListOfClabeAndTdc() {
-        return mRepo.getListClabeTdc();
+        return mRepoCallback.getListClabeTdc();
     }
 
     public String[] getListOfClabes() {
-        return mRepo.getListOfClabes();
+        return mRepoCallback.getListOfClabes();
     }
 
     public String[] getListOfTdc() {
-        return mRepo.getListOfTdc();
+        return mRepoCallback.getListOfTdc();
     }
 }
