@@ -29,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mQrViewModel = ViewModelProviders.of(this).get(QrMainActivityViewModel.class);
 
         setViews(mMainBinding);
         setListeners();
+        observeUI(mQrViewModel);
+    }
 
-        mQrViewModel = ViewModelProviders.of(this).get(QrMainActivityViewModel.class);
+    private void observeUI(QrMainActivityViewModel mQrViewModel) {
         mQrViewModel.getCurrentQrData().observe(this, new Observer<Bitmap>() {
             @Override
             public void onChanged(Bitmap bitmap) {
