@@ -2,12 +2,16 @@ package com.example.generadordeqrs.vm;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.generadordeqrs.R;
+
 import com.example.generadordeqrs.domain.UseCaseCreateQRFromJson;
+import com.example.generadordeqrs.repository.RepositorySimulationData;
 
 public class QrMainActivityViewModel extends ViewModel {
     private static final String LOG_TAG = QrMainActivityViewModel.class.getSimpleName();
@@ -25,7 +29,8 @@ public class QrMainActivityViewModel extends ViewModel {
     public QrMainActivityViewModel() {
         currentQrImage = new MutableLiveData<>();
 
-        qrGenerator = UseCaseCreateQRFromJson.getInstance();
+        RepositorySimulationData repo = RepositorySimulationData.getInstance();
+        qrGenerator = UseCaseCreateQRFromJson.getInstance(repo);
     }
 
     public MutableLiveData<Bitmap> getCurrentQrData() {
@@ -120,7 +125,10 @@ public class QrMainActivityViewModel extends ViewModel {
                 width,
                 itemErrorCorrection,
                 context,
-                hasLogo);
+                hasLogo,
+                Color.BLACK,
+                Color.WHITE,
+                R.drawable.ic_bmovil);
 
         hasLogo = false;
 

@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.Log;
 
-import com.example.generadordeqrs.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -17,24 +16,19 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.WHITE;
-
-import com.example.generadordeqrs.repository.RepositorySimulationData;
-
 public class UseCaseCreateQRFromJson {
 
     private static UseCaseCreateQRFromJson sInstance;
     private static final String LOG_TAG = UseCaseCreateQRFromJson.class.getSimpleName();
     private RepositoryCallback mRepoCallback;
 
-    private UseCaseCreateQRFromJson() {
-        mRepoCallback = RepositorySimulationData.getInstance();
+    private UseCaseCreateQRFromJson(RepositoryCallback repositoryCallback) {
+        mRepoCallback = repositoryCallback;
     }
 
-    public static UseCaseCreateQRFromJson getInstance() {
+    public static UseCaseCreateQRFromJson getInstance(RepositoryCallback repositoryCallback) {
         if (sInstance == null) {
-            sInstance = new UseCaseCreateQRFromJson();
+            sInstance = new UseCaseCreateQRFromJson(repositoryCallback);
         }
         return sInstance;
     }
@@ -64,7 +58,7 @@ public class UseCaseCreateQRFromJson {
 
 
     public Bitmap createQRBitmap(String qrCodeData, String charset, int sideLength, String item,
-                                 Context context, Boolean isLogo) {
+                                 Context context, Boolean isLogo, int ColorA, int ColorB, int icon) {
 
         BitMatrix result;
         Bitmap bitmap;
@@ -101,7 +95,7 @@ public class UseCaseCreateQRFromJson {
             for (int y = 0; y < height; y++) {
                 int offset = y * width;
                 for (int x = 0; x < width; x++) {
-                    pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                    pixels[offset + x] = result.get(x, y) ? ColorA : ColorB;
                 }
             }
 
@@ -109,7 +103,7 @@ public class UseCaseCreateQRFromJson {
             bitmap.setPixels(pixels, 0, sideLength, 0, 0, width, height);
 
             if (isLogo) {
-                Bitmap overlay = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_bmovil);
+                Bitmap overlay = BitmapFactory.decodeResource(context.getResources(), icon);
                 Bitmap overlay1 = getResizedBitmap(overlay, 110, 110);
 
                 return mergeBitmaps(overlay1, bitmap);
